@@ -1,0 +1,10 @@
+{
+  "name": "cekresi-vercel",
+  "version": "1.0.0",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "cheerio": "^1.0.0-rc.12",
+    "form-data": "^4.0.0",
+    "crypto-js": "^4.2.0"
+  }
+}

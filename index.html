@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lacak Paket Anda</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+        :root {
+            --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --text-color: #2c3e50;
+            --text-secondary: #5a6a7a;
+            --border-color: rgba(200, 200, 200, 0.6);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --primary-color: #3498db;
+            --primary-light: rgba(52, 152, 219, 0.1);
+            --success-color: #2ecc71;
+        }
+
+        .theme-spx {
+            --primary-color: #EE4D2D;
+            --primary-light: rgba(238, 77, 45, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: var(--gradient-bg);
+            background-attachment: fixed;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0 2rem;
+        }
+
+        header, footer {
+            width: 100%;
+            max-width: 1000px;
+            padding: 1.5rem 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            z-index: 10;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+        }
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            transition: color 0.5s;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: auto;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -5px 20px var(--shadow-color);
+        }
+        .social-links a {
+            color: var(--text-secondary);
+            margin: 0 0.75rem;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        footer .copyright {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            transition: all 0.5s ease;
+        }
+
+        h1 { text-align: center; font-weight: 700; color: var(--primary-color); margin-top: 0; margin-bottom: 2rem; transition: color 0.5s; }
+        .input-group { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+        input, select {
+            width: 100%; padding: 14px 18px; border: 1px solid transparent; border-radius: 10px; font-size: 1rem;
+            background: rgba(255, 255, 255, 0.7); color: var(--text-color); transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        input:focus, select:focus { outline: none; border-color: var(--primary-color); background: #fff; }
+        button {
+            width: 100%; padding: 15px; background: var(--primary-color); color: white; border: none;
+            border-radius: 10px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+        }
+        button:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+
+        #result-container {
+            margin-top: 2.5rem; border-top: 1px solid var(--border-color); padding-top: 2.5rem;
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+        #result-container.visible { opacity: 1; }
+        .status-highlight {
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary-color);
+            background: var(--primary-light);
+            border-radius: 12px;
+            transition: all 0.5s;
+        }
+        .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .detail-card {
+            background: var(--primary-light); padding: 1rem 1.5rem; border-radius: 12px;
+            display: flex; align-items: center; gap: 1rem; transition: background 0.5s;
+        }
+        .detail-card .fa-fw { color: var(--primary-color); font-size: 1.5rem; transition: color 0.5s; }
+        .detail-card strong { display: block; font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+        .detail-card span { font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .copy-btn { cursor: pointer; color: var(--text-secondary); transition: color 0.2s; }
+        .copy-btn:hover { color: var(--primary-color); }
+        .eta-delivered { color: var(--success-color); font-weight: 600; }
+
+        .history-section h3 { margin-bottom: 1.5rem; font-size: 1.25rem; }
+        .timeline { list-style: none; padding: 0; margin: 0; border-left: 2px solid var(--border-color); }
+        .timeline-item { padding: 0.5rem 0 1.5rem 2rem; position: relative; }
+        .timeline-item::before {
+            content: '\f111'; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            position: absolute; left: -10px; top: 10px; font-size: 12px;
+            color: var(--border-color); background: var(--card-bg); padding: 2px;
+            transition: all 0.5s;
+        }
+        .timeline-item:first-child::before {
+            content: '\f058'; color: var(--primary-color); font-size: 16px; left: -12px;
+        }
+        .error-message {
+            text-align:center;
+            color: #ff4d4d;
+            background: rgba(255, 77, 77, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Lacak.in</div>
+</header>
+
+<div class="container" id="main-container">
+    <h1>Pelacakan Paket Cepat & Akurat</h1>
+
+    <div class="input-group">
+        <input id="resi" placeholder="Masukkan Nomor Resi Anda" />
+        <select id="exp">
+            <option value="" disabled selected>Pilih Ekspedisi</option>
+            <option value="shopee-express">Shopee Express</option>
+            <option value="ninja">Ninja Van</option>
+            <option value="lion-parcel">Lion Parcel</option>
+            <option value="pos-indonesia">POS Indonesia</option>
+            <option value="tiki">TIKI</option>
+            <option value="acommerce">aCommerce</option>
+            <option value="gtl-goto-logistics">GTL GoTo Logistics</option>
+            <option value="paxel">Paxel</option>
+            <option value="sap-express">SAP Express</option>
+            <option value="indah-logistik-cargo">Indah Logistik Cargo</option>
+            <option value="lazada-express-lex">Lazada Express (LEX)</option>
+            <option value="lazada-logistics">Lazada Logistics</option>
+            <option value="janio-asia">Janio Asia</option>
+            <option value="jet-express">JET Express</option>
+            <option value="pcp-express">PCP Express</option>
+            <option value="pt-ncs">PT. NCS</option>
+            <option value="nss-express">NSS Express</option>
+            <option value="grab-express">Grab Express</option>
+            <option value="rcl-red-carpet-logistics">RCL Red Carpet Logistics</option>
+            <option value="qrim-express">Qrim Express</option>
+            <option value="ark-xpress">ARK Xpress</option>
+            <option value="standard-express-lwe">Standard Express (LWE)</option>
+            <option value="luar-negeri-bea-cukai">Luar Negeri (Bea Cukai)</option>
+        </select>
+    </div>
+    <button onclick="cek()"><i class="fas fa-search"></i> Lacak Sekarang</button>
+
+    <div id="result-container"></div>
+</div>
+
+<footer>
+    <div class="social-links">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <p class="copyright">&copy; 2025 Lacak.in by kaijesh - Semua Hak Cipta Dilindungi.</p>
+</footer>
+
+<script>
+  async function cek() {
+    const noresi = document.getElementById('resi').value;
+    const ekspedisi = document.getElementById('exp').value;
+    const resultContainer = document.getElementById('result-container');
+
+    if (!noresi || !ekspedisi) {
+        resultContainer.innerHTML = `<div class="error-message">Nomor resi dan ekspedisi harus diisi.</div>`;
+        resultContainer.classList.add('visible');
+        return;
+    }
+
+    resultContainer.classList.remove('visible');
+    resultContainer.innerHTML = `<p style="text-align:center;">Mencari paket Anda...</p>`;
+    setTimeout(() => resultContainer.classList.add('visible'), 50);
+
+
+    try {
+      const res = await fetch(`/api/cekresi?noresi=${encodeURIComponent(noresi)}&ekspedisi=${encodeURIComponent(ekspedisi)}`);
+
+      if (!res.ok) {
+          const errorData = await res.json().catch(() => null);
+          const errorMessage = errorData ? errorData.message : `Error: ${res.status} ${res.statusText}`;
+          throw new Error(errorMessage);
+      }
+
+      const data = await res.json();
+      displayTrackingData(data);
+
+    } catch (error) {
+        const availableExpeditions = "shopee-express, ninja, lion-parcel, pos-indonesia, tiki, acommerce, gtl-goto-logistics, paxel, sap-express, indah-logistik-cargo, lazada-express-lex, lazada-logistics, janio-asia, jet-express, pcp-express, pt-ncs, nss-express, grab-express, rcl-red-carpet-logistics, qrim-express, ark-xpress, standard-express-lwe, luar-negeri-bea-cukai";
+        const message = `
+            <div class="error-message">
+                <p>Gagal: ${error.message || 'Data tidak ditemukan.'}</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem;"><strong>List ekspedisi yang tersedia:</strong><br>${availableExpeditions.split(', ').join(', ')}</p>
+            </div>
+        `;
+        resultContainer.innerHTML = message;
+    }
+  }
+
+  function displayTrackingData(response) {
+    const resultContainer = document.getElementById('result-container');
+    const mainContainer = document.getElementById('main-container');
+
+    if (!response.success || !response.data) {
+      resultContainer.innerHTML = `<div class="error-message">Gagal: ${response.message || 'Data tidak ditemukan.'}</div>`;
+      return;
+    }
+
+    const data = response.data;
+
+    mainContainer.className = 'container';
+    if (data.ekspedisiCode && data.ekspedisiCode.toLowerCase() === 'shopee-express') {
+      mainContainer.classList.add('theme-spx');
+    }
+
+    let historyHtml = data.history.map((item, index) => `
+      <li class="timeline-item">
+        <p><strong>${item.keterangan}</strong></p>
+        <span class="date">${item.tanggal}</span>
+      </li>`).join('');
+
+    resultContainer.innerHTML = `
+      <div class="status-highlight">
+          <h2>${data.status}</h2>
+          <p>${data.lastPosition}</p>
+      </div>
+      <div class="details-grid">
+          <div class="detail-card">
+              <i class="fas fa-hashtag fa-fw"></i>
+              <div>
+                  <strong>NO. RESI</strong>
+                  <span id="resi-text">${data.resi} <i class="far fa-copy fa-fw copy-btn" onclick="copyResi()"></i></span>
+              </div>
+          </div>
+          <div class="detail-card">
+              <i class="fas fa-truck fa-fw"></i>
+              <div>
+                  <strong>EKSPEDISI</strong>
+                  <span>${data.ekspedisi}</span>
+              </div>
+          </div>
+          <div class="detail-card">
+              <i class="fas fa-calendar-check fa-fw"></i>
+              <div>
+                  <strong>STATUS PENGIRIMAN</strong>
+                  <span class="eta-delivered">${data.status === 'Delivered' ? 'Telah Diterima' : 'Dalam Proses'}</span>
+              </div>
+          </div>
+      </div>
+      <div class="history-section">
+          <h3>Detail Perjalanan</h3>
+          <ul class="timeline">${historyHtml}</ul>
+      </div>
+    `;
+    resultContainer.classList.add('visible');
+  }
+
+  function copyResi() {
+    const resiText = document.getElementById('resi-text').innerText;
+    navigator.clipboard.writeText(resiText).then(() => {
+      alert('No. Resi berhasil disalin!');
+    }).catch(err => {
+      console.error('Gagal menyalin teks: ', err);
+      alert('Gagal menyalin No. Resi.');
+    });
+  }
+</script>
+
+</body>
+</html>
