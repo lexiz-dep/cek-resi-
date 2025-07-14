@@ -22,7 +22,7 @@ function createTimers(resi) {
         return null;
     }
 }
-
+//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
 async function cekresi(noresi, ekspedisi) {
     try {
         const _ekspedisi = {
@@ -73,9 +73,9 @@ async function cekresi(noresi, ekspedisi) {
                 'user-agent': 'Mozilla/5.0'
             }
         });
-        
+        //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
         const $response = cheerio.load(data);
-        
+        //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
         const result = {
             success: false,
             message: '',
@@ -91,7 +91,7 @@ async function cekresi(noresi, ekspedisi) {
                 history: []
             }
         };
-        
+        //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
         const alertSuccess = $response('.alert.alert-success');
         if (alertSuccess.length > 0) {
             result.success = true;
@@ -117,16 +117,16 @@ async function cekresi(noresi, ekspedisi) {
                     }
                 }
             });
-            
+            //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
             const csText = $response('h5 center').text();
             if (csText && csText.includes('Customer Service Phone:')) result.data.customerService = csText.replace('Customer Service Phone:', '').trim();
-            
+    //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//        
             const lastPosition = $response('#last_position').text().trim();
             if (lastPosition) result.data.lastPosition = lastPosition;
             
             const shareLink = $response('#linkcekresi').attr('value');
             if (shareLink) result.data.shareLink = shareLink;
-            
+         //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//   
             const historyTable = $response('h4:contains("History")').next('table').find('tbody tr');
             historyTable.each((index, element) => {
                 const cells = $response(element).find('td');
@@ -162,3 +162,4 @@ async function cekresi(noresi, ekspedisi) {
 }
 
 module.exports = cekresi;
+//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
